@@ -1,8 +1,10 @@
-package com.example.navruz.gridview;
+package com.example.navruz.gridview.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +15,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.navruz.gridview.R;
+import com.example.navruz.gridview.adapter.GridAdapter;
+import com.example.navruz.gridview.entity.ItemObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final int NUM_COLUMNS = 2;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private List<ItemObject> data = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +55,16 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mLayoutManager = new GridLayoutManager(MainActivity.this, NUM_COLUMNS);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        /*create custom data*/
+        data = getAllItemList();
+
+        mAdapter = new GridAdapter(data);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -97,5 +122,28 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private List<ItemObject> getAllItemList(){
+
+        List<ItemObject> allItems = new ArrayList<ItemObject>();
+        allItems.add(new ItemObject("Tashkent", R.drawable.one));
+        allItems.add(new ItemObject("Urgench", R.drawable.two));
+        allItems.add(new ItemObject("Samarkand", R.drawable.three));
+        allItems.add(new ItemObject("Khiva", R.drawable.four));
+        allItems.add(new ItemObject("Qo`qon", R.drawable.five));
+        allItems.add(new ItemObject("Nukus", R.drawable.six));
+        allItems.add(new ItemObject("Jizzakh", R.drawable.seven));
+        allItems.add(new ItemObject("Andijon", R.drawable.eight));
+        allItems.add(new ItemObject("Tashkent", R.drawable.one));
+        allItems.add(new ItemObject("Urgench", R.drawable.two));
+        allItems.add(new ItemObject("Samarkand", R.drawable.three));
+        allItems.add(new ItemObject("Khiva", R.drawable.four));
+        allItems.add(new ItemObject("Qo`qon", R.drawable.five));
+        allItems.add(new ItemObject("Nukus", R.drawable.six));
+        allItems.add(new ItemObject("Jizzakh", R.drawable.seven));
+        allItems.add(new ItemObject("Andijon", R.drawable.eight));
+
+        return allItems;
     }
 }
